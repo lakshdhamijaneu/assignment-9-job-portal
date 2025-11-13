@@ -1,73 +1,146 @@
-# React + TypeScript + Vite
+# Job Portal -- Assignment 9
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A full-stack job portal application built using **React + TypeScript +
+Vite** (frontend) and the backend APIs implemented in **Assignment 8**.
 
-Currently, two official plugins are available:
+This project demonstrates authentication, protected routes, API
+integration, job listings, and company showcase images --- all styled
+with **Material UI**.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+------------------------------------------------------------------------
 
-## React Compiler
+## 🚀 Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### 🔐 **Authentication**
 
-## Expanding the ESLint configuration
+-   Login using:
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+        POST /user/login
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+-   Uses Axios to authenticate against backend
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+-   Stores logged-in user in `localStorage`
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+-   All main pages protected with `ProtectedRoute`
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 🏠 **Pages Included**
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+  Page               Description
+  ------------------ ---------------------------------------------
+  Home               Hero section + navigation buttons
+  Login              Fully functional login with API integration
+  Job Listings       Static job list displayed using MUI cards
+  Company Showcase   Dynamic list of users fetched from backend
+  About              Summary of app features
+  Contact            Demo contact form
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+------------------------------------------------------------------------
+
+## 🧩 **Tech Stack**
+
+### Frontend
+
+-   React 18\
+-   TypeScript\
+-   Vite\
+-   Material UI v7\
+-   Axios\
+-   React Router v6
+
+### Backend (From Assignment 8)
+
+-   Node.js + Express\
+-   REST API routes\
+-   Bcrypt authentication\
+-   Multer for image upload
+
+------------------------------------------------------------------------
+
+## 📡 **API Endpoints Used**
+
+The frontend communicates with the backend using these routes:
+
+### 🔹 Login
+
+    POST /user/login
+
+### 🔹 Fetch all users
+
+    GET /getUser
+
+### 🔹 User image upload
+
+    POST /user/uploadImage
+
+### 🔹 Other backend routes (create/edit/delete user)
+
+Implemented in Assignment 8 --- not used directly in this frontend.
+
+------------------------------------------------------------------------
+
+## 📂 **Project Structure**
+
+    src/
+      api/
+        axiosClient.ts
+      components/
+        Navbar.tsx
+        ProtectedRoute.tsx
+      context/
+        AuthContext.tsx
+      data/
+        jobPosts.ts
+      pages/
+        Home.tsx
+        Login.tsx
+        JobListings.tsx
+        CompanyShowcase.tsx
+        About.tsx
+        Contact.tsx
+      types/
+        index.ts
+
+------------------------------------------------------------------------
+
+## ▶️ **How to Run**
+
+### 1️⃣ Install dependencies
+
+    npm install
+
+### 2️⃣ Start Vite dev server
+
+    npm run dev
+
+### 3️⃣ Make sure backend (Assignment 8) is running on:
+
+    http://localhost:3000
+
+------------------------------------------------------------------------
+
+## 🖼️ Screenshots (Optional)
+
+You may add screenshots here before submission:
+
+    /screenshots/login.png  
+    /screenshots/home.png  
+    /screenshots/job-listings.png  
+    /screenshots/company-showcase.png
+
+------------------------------------------------------------------------
+
+## ✔️ Notes
+
+-   The Job Listings are static (frontend-only), as required.\
+-   The Company Showcase pulls images and user details from the
+    backend.\
+-   The login is fully functional using Assignment 8 backend logic.\
+-   Protected routes ensure only logged-in users can access pages.
+
+------------------------------------------------------------------------
+
+## 👨‍💻 Developed By
+
+**Laksh Dhamija**\
+Northeastern University\
+Assignment 9 -- Web Development
