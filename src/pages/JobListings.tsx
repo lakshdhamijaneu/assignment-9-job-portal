@@ -6,7 +6,7 @@ import {
   CardActions,
   Button,
   Grid,
-} from "@mui/material"; // correct import
+} from "@mui/material";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import { jobPosts } from "../data/jobPosts";
 
