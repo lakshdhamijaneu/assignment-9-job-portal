@@ -21,6 +21,7 @@ const CompanyShowcase = () => {
     const loadUsers = async () => {
       try {
         const { data } = await axiosClient.get<UsersResponse>("/getUser");
+        console.log("data", data);
         setUsers(data.users);
       } catch (err) {
         console.error(err);

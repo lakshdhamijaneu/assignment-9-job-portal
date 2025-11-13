@@ -6,26 +6,36 @@ interface AuthContextType {
   user: User | null;
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
+  loading: boolean;
 }
 
 export const AuthContext = createContext<AuthContextType>({
   user: null,
   login: async () => {},
   logout: () => {},
+  loading: true,
 });
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  // Load from localStorage on page refresh
+  // Load user from localStorage BEFORE rendering protected routes
   useEffect(() => {
     const saved = localStorage.getItem("user");
-    if (saved) {
-      setUser(JSON.parse(saved));
+
+    if (saved && saved !== "undefined" && saved !== "null") {
+      try {
+        setUser(JSON.parse(saved));
+      } catch (err) {
+        console.error("Invalid stored user", err);
+        localStorage.removeItem("user");
+      }
     }
+
+    setLoading(false); // Done loading initial state
   }, []);
 
-  // REAL login using your backend
   const login = async (email: string, password: string) => {
     const { data } = await axiosClient.post<LoginResponse>("/user/login", {
       email,
@@ -42,7 +52,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout, loading }}>
       {children}
     </AuthContext.Provider>
   );
