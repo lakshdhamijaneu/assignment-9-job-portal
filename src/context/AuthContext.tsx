@@ -1,24 +1,39 @@
-import { createContext, useState, type ReactNode } from "react";
-import type { User } from "../types";
+import { createContext, useState, useEffect, type ReactNode } from "react";
+import type { User, LoginResponse } from "../types";
+import { axiosClient } from "../api/axiosClient";
 
 interface AuthContextType {
   user: User | null;
-  login: (u: User) => void;
+  login: (email: string, password: string) => Promise<void>;
   logout: () => void;
 }
 
 export const AuthContext = createContext<AuthContextType>({
   user: null,
-  login: () => {},
+  login: async () => {},
   logout: () => {},
 });
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
 
-  const login = (u: User) => {
-    setUser(u);
-    localStorage.setItem("user", JSON.stringify(u));
+  // Load from localStorage on page refresh
+  useEffect(() => {
+    const saved = localStorage.getItem("user");
+    if (saved) {
+      setUser(JSON.parse(saved));
+    }
+  }, []);
+
+  // REAL login using your backend
+  const login = async (email: string, password: string) => {
+    const { data } = await axiosClient.post<LoginResponse>("/user/login", {
+      email,
+      password,
+    });
+
+    setUser(data.user);
+    localStorage.setItem("user", JSON.stringify(data.user));
   };
 
   const logout = () => {
